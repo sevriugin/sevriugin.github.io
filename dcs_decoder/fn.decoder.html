@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Decodes a Didomi Consent string into a map of key-value pairs."><title>decoder in dcs_decoder - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-492a78a4a87dcc01.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="dcs_decoder" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0 (f6e511eec 2024-10-15)" data-channel="1.82.0" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../static.files/storage-118b08c4c78b968e.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-921df33f47b8780c.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-3b12f09e550e0385.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../dcs_decoder/index.html">dcs_<wbr>decoder</a><span class="version">1.0.0</span></h2></div><div class="sidebar-elems"></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Function <a href="index.html">dcs_decoder</a>::<wbr><a class="fn" href="#">decoder</a><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><span class="out-of-band"><a class="src" href="../src/dcs_decoder/decoder/decoder.rs.html#122-168">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub fn decoder(consent_string: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.82.0/std/primitive.str.html">str</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.82.0/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/1.82.0/std/primitive.str.html">str</a>, <a class="enum" href="enum.DecodedType.html" title="enum dcs_decoder::DecodedType">DecodedType</a>&gt;</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Decodes a Didomi Consent string into a map of key-value pairs.</p>
+<h2 id="arguments"><a class="doc-anchor" href="#arguments">§</a>Arguments</h2>
+<ul>
+<li><code>consent_string</code> - The consent string to decode.</li>
+</ul>
+<h2 id="returns"><a class="doc-anchor" href="#returns">§</a>Returns</h2>
+<p>A HashMap where keys from Didomi Consent String Schema <code>fields</code>:</p>
+<div class="example-wrap"><pre class="language-json"><code>{ 
+    &quot;consent_string_type&quot;: &quot;didomi_consent_string&quot;,
+    &quot;specification_version&quot;: 2,
+    &quot;fields&quot;: [
+    {
+      &quot;type&quot;: &quot;version&quot;,
+      &quot;description&quot;: &quot;Didomi Consent String Specification Version, 6 bits number - 000010 or &#39;C&#39; in Base64 for v2&quot;,
+      &quot;key&quot;: &quot;version&quot;,
+      &quot;value&quot;: 2
+    },
+    {
+      &quot;type&quot;: &quot;uuid&quot;,
+      &quot;description&quot;: &quot;User ID (UUID)&quot;,
+      &quot;key&quot;: &quot;user_id&quot;
+    },
+    {
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;description&quot;: &quot;UTC epoch time format when the Consent String was initially created&quot;,
+      &quot;key&quot;: &quot;created&quot;
+    },
+    {
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;description&quot;: &quot;UTC epoch time format when the Consent String was last time updated&quot;,
+      &quot;key&quot;: &quot;updated&quot;
+    },
+    {
+      &quot;type&quot;: &quot;u16&quot;,
+      &quot;description&quot;: &quot;Regulation ID that was used to encode user status&quot;,
+      &quot;key&quot;: &quot;regulation_id&quot;
+    },
+    {
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;description&quot;: &quot;Last sync date&quot;,
+      &quot;key&quot;: &quot;sync&quot;,
+      &quot;optional&quot;: true
+    },
+    {
+      &quot;type&quot;: &quot;enabled_disabled_ids&quot;,
+      &quot;description&quot;: &quot;User Status for purposes opt-in&quot;,
+      &quot;key&quot;: &quot;purposes_optin&quot;,
+      &quot;variants&quot;: [
+        &quot;bit_field_2_bits&quot;,
+        &quot;ranges_u16&quot;,
+        &quot;ranges_fibonacci&quot;
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;enabled_disabled_ids&quot;,
+      &quot;description&quot;: &quot;User Status for purposes opt-out&quot;,
+      &quot;key&quot;: &quot;purposes_optout&quot;,
+      &quot;variants&quot;: [
+        &quot;bit_field_2_bits&quot;,
+        &quot;ranges_u16&quot;,
+        &quot;ranges_fibonacci&quot;
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;enabled_disabled_ids&quot;,
+      &quot;description&quot;: &quot;User Status for vendors opt-in&quot;,
+      &quot;key&quot;: &quot;vendors_optin&quot;,
+      &quot;variants&quot;: [
+        &quot;bit_field_2_bits&quot;,
+        &quot;ranges_u16&quot;,
+        &quot;ranges_fibonacci&quot;
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;enabled_disabled_ids&quot;,
+      &quot;description&quot;: &quot;User Status for vendors opt-out&quot;,
+      &quot;key&quot;: &quot;vendors_optout&quot;,
+      &quot;variants&quot;: [
+        &quot;bit_field_2_bits&quot;,
+        &quot;ranges_u16&quot;,
+        &quot;ranges_fibonacci&quot;
+      ]
+    }
+  ]
+}
+</code></pre></div><h2 id="example"><a class="doc-anchor" href="#example">§</a>Example</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code> 
+    <span class="kw">let </span>consent_string = <span class="string">"BGHWv4UYba5-dZnABdKu__D6iWHsD6iWHsJ9iee2BAAilKiABFKVQAACIscAAAiLGAAA"</span>;
+    <span class="kw">let </span>user_status = decoder(consent_string);
+    <span class="kw">match </span>user_status.get(<span class="string">"purposes_optout"</span>) {
+        <span class="prelude-val">Some</span>(value) =&gt; {
+            <span class="kw">match </span>value {
+                DecodedType::RangesU16(user_status_item) |
+                DecodedType::RangesFibonacci(user_status_item) |
+                DecodedType::BitField2Bits(user_status_item) =&gt; {
+                    <span class="macro">assert_eq!</span>(user_status_item.enabled, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]);
+                    <span class="macro">assert_eq!</span>(user_status_item.disabled, <span class="kw-2">&amp;</span>[<span class="number">3</span>, <span class="number">4</span>])
+                }
+                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Failed to decode [purposes_optout] field with value"</span>)
+            }
+        }
+        <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Mandatory [purposes_optout] is missing from the decoded result"</span>)
+   }
+   </code></pre></div>
+<h2 id="see-also"><a class="doc-anchor" href="#see-also">§</a>See Also</h2>
+<ul>
+<li><a href="enum.DecodedType.html" title="enum dcs_decoder::DecodedType"><code>DecodedType</code></a></li>
+<li><a href="struct.UserStatusItem.html" title="struct dcs_decoder::UserStatusItem"><code>UserStatusItem</code></a></li>
+</ul>
+</div></details></section></div></main></body></html>

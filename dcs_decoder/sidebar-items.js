@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["DecodedType"],"fn":["decoder"],"macro":["schema"],"struct":["UserStatusItem"]};
