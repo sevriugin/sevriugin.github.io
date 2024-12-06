@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["DecodedType"],"fn":["decoder"],"macro":["schema"],"struct":["UserStatusItem"]};
+window.SIDEBAR_ITEMS = {"enum":["DataType","DecodedType"],"fn":["cleanup_decoder_result","cleanup_elements","decode_dcs","decoder"],"macro":["schema"],"struct":["DecoderResult","EnabledDisabled","Field","UserStatusItem"],"union":["Data"]};
